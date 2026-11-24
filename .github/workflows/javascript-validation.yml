@@ -1,0 +1,60 @@
+
+name: JavaScript Code Validation
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  javascript-validation:
+
+    name: Node.js ${{ matrix.node-version }} Validation
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: ['22', '24']
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Verify Node.js version
+        run: node --version
+
+      - name: Validate business logic syntax
+        run: node --check js/inventory.js
+
+      - name: Validate storage module syntax
+        run: node --check js/storage.js
+
+      - name: Validate application controller syntax
+        run: node --check js/app.js
+
+      - name: Validate inventory test syntax
+        run: node --check tests/inventory.test.js
+
+      - name: Validate storage test syntax
+        run: node --check tests/storage.test.js
+
+      - name: Run inventory unit tests
+        run: node --test tests/inventory.test.js
+
+      - name: Run storage unit tests
+        run: node --test tests/storage.test.js
+
+      - name: Run complete test suite
+        run: node --test tests/inventory.test.js tests/storage.test.js
