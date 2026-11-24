@@ -1,10 +1,19 @@
 
-# Inventory Management System
+# Inventory Pro — Inventory Management System
 
-![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-![Status](https://img.shields.io/badge/Status-In_Development-orange)
+[![JavaScript Code Validation](https://github.com/andrewforest-dev/inventory-management-system/actions/workflows/javascript-validation.yml/badge.svg?branch=main)](https://github.com/andrewforest-dev/inventory-management-system/actions/workflows/javascript-validation.yml)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
+![Node.js](https://img.shields.io/badge/Node.js-339933?logo=node.js&logoColor=white)
+![Unit Tests](https://img.shields.io/badge/Unit_Tests-54_Passed-brightgreen)
+![Status](https://img.shields.io/badge/Status-Live_Demo-blue)
+
+## Live Demo
+
+[![View Live Demo](https://img.shields.io/badge/View_Live_Demo-6366F1?style=for-the-badge&logo=googlechrome&logoColor=white)](https://andrewforest-dev.github.io/inventory-management-system/)
+
+https://andrewforest-dev.github.io/inventory-management-system/
 
 ## Project Overview
 
@@ -12,9 +21,9 @@ Inventory Pro is a web-based inventory management
 application designed to help small businesses manage
 products, stock levels and inventory information.
 
-The project focuses on software development
-fundamentals, CRUD operations, data persistence,
-business logic and responsive interface design.
+The project combines software development fundamentals,
+business logic, data persistence, automated testing
+and professional UX/UI design.
 
 ## Business Problem
 
@@ -24,85 +33,62 @@ using spreadsheets or physical records.
 This can lead to inconsistent information,
 stock shortages and difficulties tracking products.
 
-Inventory Pro aims to provide a centralized
-interface for local inventory management.
+Inventory Pro provides a structured interface
+for local inventory management.
 
-## Planned Features
+## Features
 
-- Product registration.
-- Product editing and deletion.
-- Product search and category filtering.
-- Stock level monitoring.
-- Low stock and out-of-stock alerts.
-- Inventory value calculation.
-- Dashboard with dynamic statistics.
-- Data persistence using LocalStorage.
-- Form validation.
+- Complete CRUD operations.
+- Product registration, editing and deletion.
+- Product search by name or SKU.
+- Category and stock status filtering.
+- Dynamic dashboard statistics.
+- Inventory value calculation in COP.
+- Low-stock and out-of-stock indicators.
+- LocalStorage data persistence.
+- Product data validation.
 - Duplicate SKU prevention.
-- CSV export.
-- Responsive user interface.
+- CSV inventory export.
+- CSV formula injection mitigation.
+- Responsive interface design.
+- Error handling and notifications.
 - Automated unit testing.
 - Continuous integration with GitHub Actions.
 - Public deployment with GitHub Pages.
 
 ## CRUD Operations
 
-| Operation | Description |
+| Operation | Implementation |
 |---|---|
 | Create | Register new products |
-| Read | Display and search products |
-| Update | Edit product information |
-| Delete | Remove products from inventory |
-
-## Product Data Model
-
-| Field | Data Type | Required |
-|---|---|---|
-| ID | String | Yes |
-| SKU | String | Yes |
-| Product name | String | Yes |
-| Category | String | Yes |
-| Unit cost | Number | Yes |
-| Quantity | Integer | Yes |
-| Created at | Date | Automatic |
-| Updated at | Date | Automatic |
-
-## Business Rules
-
-- Product SKU must be unique.
-- Product name cannot be empty.
-- Unit cost must be greater than or equal to zero.
-- Stock quantity must be a non-negative integer.
-- Products with zero units are out of stock.
-- Products with 1 to 4 units have low stock.
-- Products with 5 or more units are in stock.
-
-## Dashboard Metrics
-
-- Total registered products.
-- Total inventory units.
-- Total inventory value in COP.
-- Low-stock products.
-- Out-of-stock products.
+| Read | Display, search and filter products |
+| Update | Modify existing product information |
+| Delete | Remove products with confirmation |
 
 ## Software Architecture
 
 The application separates responsibilities
-into three main layers:
+into independent modules.
 
 ### Presentation Layer
 
-HTML5, CSS3 and responsive dashboard components.
+HTML5 and CSS3 provide the dashboard interface,
+forms, tables, notifications and responsive layout.
+
+### Application Controller
+
+The app.js module connects the user interface
+with business logic and data persistence.
 
 ### Business Logic Layer
 
-JavaScript functions for CRUD operations,
-validation, filtering and inventory calculations.
+The inventory.js module handles CRUD operations,
+validation, search, filtering and calculations.
 
-### Data Layer
+### Data Persistence Layer
 
-LocalStorage and JSON for browser-based
-data persistence.
+The storage.js module manages LocalStorage,
+JSON serialization and data integrity.
 
 ## Technologies
 
@@ -112,16 +98,42 @@ data persistence.
 - JavaScript DOM API
 - LocalStorage API
 - JSON
-- Node.js for automated testing
+- Node.js
 - Git and GitHub
 - GitHub Actions
 - GitHub Pages
 
-## Planned Project Structure
+## Product Data Model
+
+| Field | Type |
+|---|---|
+| ID | UUID |
+| SKU | String |
+| Name | String |
+| Category | String |
+| Price | Number |
+| Quantity | Integer |
+| Created at | ISO Date |
+| Updated at | ISO Date |
+
+## Business Rules
+
+- Product SKUs must be unique.
+- Required fields cannot be empty.
+- Product prices cannot be negative.
+- Stock quantities must be non-negative integers.
+- Zero units means out of stock.
+- One to four units means low stock.
+- Five or more units means in stock.
+- Inventory value is calculated using unit cost
+  multiplied by quantity.
+
+## Project Structure
 
     inventory-management-system/
     ├── .github/
     │   └── workflows/
+    │       └── javascript-validation.yml
     ├── css/
     │   └── style.css
     ├── js/
@@ -129,32 +141,90 @@ data persistence.
     │   ├── storage.js
     │   └── app.js
     ├── tests/
-    │   └── inventory.test.js
+    │   ├── inventory.test.js
+    │   └── storage.test.js
     ├── index.html
     └── README.md
 
-## Learning Objectives
+## Local Installation
 
-- Implement CRUD operations.
-- Apply software architecture principles.
-- Develop reusable JavaScript functions.
-- Validate user input and business rules.
-- Manage persistent data.
-- Process and filter information.
-- Implement automated software testing.
-- Build professional administrative interfaces.
-- Deploy a functional web application.
+1. Clone or download the repository.
+2. Open the project directory.
+3. Serve the project using a local web server.
+4. Open the application in a modern browser.
+
+No external frontend dependencies are required.
+
+## Automated Testing
+
+The project uses the native Node.js test runner.
+
+Run all tests with:
+
+    node --test tests/inventory.test.js tests/storage.test.js
+
+### Test Results
+
+| Test Category | Passed |
+|---|---:|
+| CRUD Operations | 9 |
+| Product Validation | 9 |
+| Stock Business Rules | 3 |
+| Inventory Calculations | 3 |
+| Search and Filtering | 6 |
+| CSV Export | 3 |
+| Storage and Data Integrity | 21 |
+| Total | 54 |
+
+### Validation Environments
+
+| Environment | Result |
+|---|---|
+| Node.js 22 | Passed |
+| Node.js 24 | Passed |
+
+All 54 automated test cases completed successfully.
+
+Storage tests use a mock storage implementation
+to simulate persistence and error scenarios.
+
+## Continuous Integration
+
+GitHub Actions automatically validates JavaScript
+syntax and executes automated tests on Node.js
+22 and 24.
+
+The workflow runs when changes are pushed to
+the main branch or submitted through pull requests.
+
+## Manual Functional Testing
+
+The following features were verified manually:
+
+- Product creation.
+- Product display.
+- Product editing.
+- Product deletion.
+- Product name search.
+- Category filtering.
+- Stock status filtering.
+- Duplicate SKU prevention.
+- Dashboard calculations.
+- CSV export.
+
+Mobile testing and browser persistence verification
+remain pending.
 
 ## Development Status
 
-In development.
+The initial frontend version has been implemented
+and deployed through GitHub Pages.
 
-The initial version will use browser-based
-data persistence.
+The application includes eight demonstration products.
 
-A centralized database, authentication and
-multi-user functionality are outside the
-scope of this initial version.
+This version stores information locally in the
+browser. It does not include a centralized database,
+authentication or multi-user synchronization.
 
 ## Future Improvements
 
@@ -165,6 +235,21 @@ scope of this initial version.
 - Role-based access control.
 - Inventory movement history.
 - Advanced reporting.
+- End-to-end browser testing.
+
+## Learning Objectives
+
+- Software development fundamentals.
+- CRUD operations.
+- Modular software architecture.
+- Business logic implementation.
+- Data validation and persistence.
+- Error handling.
+- Automated unit testing.
+- Continuous integration.
+- Technical documentation.
+- Responsive UX/UI design.
+- Web application deployment.
 
 ## Author
 
@@ -175,3 +260,4 @@ Web Developer | Software Development Student | UX/UI Designer
 - Portfolio: https://andrewforest.com
 - GitHub: https://github.com/andrewforest-dev
 - Agency: https://nexxoagencia.com
+
