@@ -15,6 +15,10 @@
 
 https://andrewforest-dev.github.io/inventory-management-system/
 
+## Application Preview
+
+![Inventory Pro Dashboard](dashboard-preview.png)
+
 ## Project Overview
 
 Inventory Pro is a web-based inventory management
