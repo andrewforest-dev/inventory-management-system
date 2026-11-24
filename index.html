@@ -1,0 +1,478 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="Inventory management system with CRUD operations and stock monitoring.">
+
+    <meta name="author" content="Andres Devia">
+
+    <title>Inventory Pro | Management System</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div class="app-layout">
+
+        <!-- Sidebar -->
+
+        <aside class="sidebar">
+
+            <div class="brand">
+                <div class="brand-icon">IP</div>
+
+                <div>
+                    <h2>Inventory Pro</h2>
+                    <span>Management System</span>
+                </div>
+            </div>
+
+            <div class="navigation-label">
+                WORKSPACE
+            </div>
+
+            <nav class="navigation"
+                 aria-label="Main navigation">
+
+                <a href="#dashboard" class="nav-item active">
+                    Dashboard
+                </a>
+
+                <a href="#products" class="nav-item">
+                    Products
+                </a>
+
+                <button type="button"
+                        class="nav-item"
+                        id="sidebar-add-product">
+                    Add product
+                </button>
+
+                <button type="button"
+                        class="nav-item"
+                        id="sidebar-export">
+                    Export inventory
+                </button>
+
+            </nav>
+
+            <div class="sidebar-footer">
+
+                <span>VERSION 1.0</span>
+
+                <p>Developed by Andrew Forest</p>
+
+                <a href="https://andrewforest.com"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    View portfolio
+                </a>
+
+            </div>
+
+        </aside>
+
+        <!-- Main content -->
+
+        <main class="main-content" id="dashboard">
+
+            <header class="topbar">
+
+                <div>
+                    <span class="eyebrow">
+                        INVENTORY MANAGEMENT
+                    </span>
+
+                    <h1>Inventory overview</h1>
+
+                    <p>
+                        Manage your products, stock
+                        levels and inventory value.
+                    </p>
+                </div>
+
+                <button type="button"
+                        class="button button-primary"
+                        id="add-product-btn">
+                    + Add product
+                </button>
+
+            </header>
+
+            <!-- Dashboard metrics -->
+
+            <section class="metrics-grid"
+                     aria-label="Inventory statistics">
+
+                <article class="metric-card">
+                    <span class="metric-label">
+                        Total products
+                    </span>
+
+                    <strong id="total-products">
+                        0
+                    </strong>
+
+                    <small>Registered products</small>
+                </article>
+
+                <article class="metric-card">
+                    <span class="metric-label">
+                        Stock units
+                    </span>
+
+                    <strong id="total-units">
+                        0
+                    </strong>
+
+                    <small>Total available units</small>
+                </article>
+
+                <article class="metric-card">
+                    <span class="metric-label">
+                        Inventory value
+                    </span>
+
+                    <strong id="total-value">
+                        $0
+                    </strong>
+
+                    <small>Estimated value in COP</small>
+                </article>
+
+                <article class="metric-card warning-card">
+                    <span class="metric-label">
+                        Low stock
+                    </span>
+
+                    <strong id="low-stock">
+                        0
+                    </strong>
+
+                    <small>Products requiring attention</small>
+                </article>
+
+                <article class="metric-card danger-card">
+                    <span class="metric-label">
+                        Out of stock
+                    </span>
+
+                    <strong id="out-of-stock">
+                        0
+                    </strong>
+
+                    <small>Unavailable products</small>
+                </article>
+
+            </section>
+
+            <!-- Product management -->
+
+            <section class="products-section"
+                     id="products">
+
+                <div class="section-header">
+
+                    <div>
+                        <h2>Products</h2>
+
+                        <p>
+                            Manage all registered inventory items.
+                        </p>
+                    </div>
+
+                    <button type="button"
+                            class="button button-secondary"
+                            id="export-btn">
+                        Export CSV
+                    </button>
+
+                </div>
+
+                <!-- Search and filters -->
+
+                <div class="toolbar">
+
+                    <input type="search"
+                           id="search-input"
+                           placeholder="Search by product name or SKU..."
+                           aria-label="Search products">
+
+                    <select id="category-filter"
+                            aria-label="Filter by category">
+
+                        <option value="all">
+                            All categories
+                        </option>
+
+                    </select>
+
+                    <select id="status-filter"
+                            aria-label="Filter by stock status">
+
+                        <option value="all">
+                            All stock statuses
+                        </option>
+
+                        <option value="in-stock">
+                            In stock
+                        </option>
+
+                        <option value="low-stock">
+                            Low stock
+                        </option>
+
+                        <option value="out-of-stock">
+                            Out of stock
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Inventory table -->
+
+                <div class="table-container">
+
+                    <table class="products-table">
+
+                        <thead>
+
+                            <tr>
+                                <th scope="col">SKU</th>
+                                <th scope="col">Product</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Unit cost</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Total value</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="products-table-body">
+
+                            <!-- Generated dynamically -->
+
+                        </tbody>
+
+                    </table>
+
+                    <div id="empty-state"
+                         class="empty-state">
+
+                        <h3>No products found</h3>
+
+                        <p>
+                            Add your first product
+                            to start managing inventory.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="table-footer">
+
+                    <span id="product-count">
+                        Showing 0 products
+                    </span>
+
+                    <span>
+                        Inventory Pro
+                    </span>
+
+                </div>
+
+            </section>
+
+            <footer class="main-footer">
+
+                <p>
+                    Designed &amp; developed by Andrés Devia
+                </p>
+
+                <div>
+                    <a href="https://andrewforest.com"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        Portfolio
+                    </a>
+
+                    <a href="https://github.com/andrewforest-dev/inventory-management-system"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        GitHub
+                    </a>
+                </div>
+
+            </footer>
+
+        </main>
+
+    </div>
+
+    <!-- Product creation and editing dialog -->
+
+    <dialog id="product-modal"
+            class="modal"
+            aria-labelledby="modal-title">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <div>
+                    <h2 id="modal-title">
+                        Add product
+                    </h2>
+
+                    <p>
+                        Enter the product information.
+                    </p>
+                </div>
+
+                <button type="button"
+                        class="close-button"
+                        id="close-modal"
+                        aria-label="Close dialog">
+                    &times;
+                </button>
+
+            </div>
+
+            <form id="product-form">
+
+                <input type="hidden" id="product-id">
+
+                <div class="form-group">
+
+                    <label for="product-sku">
+                        SKU
+                    </label>
+
+                    <input type="text"
+                           id="product-sku"
+                           maxlength="40"
+                           placeholder="PRD-001"
+                           required>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="product-name">
+                        Product name
+                    </label>
+
+                    <input type="text"
+                           id="product-name"
+                           maxlength="100"
+                           placeholder="Enter product name"
+                           required>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="product-category">
+                        Category
+                    </label>
+
+                    <input type="text"
+                           id="product-category"
+                           maxlength="60"
+                           placeholder="Electronics, accessories..."
+                           required>
+
+                </div>
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+
+                        <label for="product-price">
+                            Unit cost (COP)
+                        </label>
+
+                        <input type="number"
+                               id="product-price"
+                               min="0"
+                               step="0.01"
+                               placeholder="0"
+                               required>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="product-quantity">
+                            Quantity
+                        </label>
+
+                        <input type="number"
+                               id="product-quantity"
+                               min="0"
+                               step="1"
+                               placeholder="0"
+                               required>
+
+                    </div>
+
+                </div>
+
+                <p class="form-error"
+                   id="form-error"
+                   role="alert"
+                   hidden>
+                </p>
+
+                <div class="modal-actions">
+
+                    <button type="button"
+                            class="button button-secondary"
+                            id="cancel-product">
+                        Cancel
+                    </button>
+
+                    <button type="submit"
+                            class="button button-primary">
+                        Save product
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </dialog>
+
+    <!-- Application notifications -->
+
+    <div id="notification"
+         class="notification"
+         role="status"
+         aria-live="polite">
+    </div>
+
+    <!-- Application modules -->
+
+    <script src="js/inventory.js" defer></script>
+
+    <script src="js/storage.js" defer></script>
+
+    <script src="js/app.js" defer></script>
+
+</body>
+
+</html>
